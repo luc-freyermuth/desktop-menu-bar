@@ -1,6 +1,20 @@
 {
   "name": "desktop-menu-bar",
   "version": "0.0.1",
+  "description": "An angular component for a desktop like menu bar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luc-freyermuth/desktop-menu-bar"
+  },
+  "keywords": [
+    "angular",
+    "desktop-like",
+    "desktop",
+    "menu",
+    "bar"
+  ],
+  "author": "Luc Freyermuth",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^9.0.5",
     "@angular/core": "^9.0.5",
