@@ -1,0 +1,32 @@
+@import '../constants.scss';
+
+.menu-bar {
+    background-color: $main-color;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+
+    .menu-bar-item {
+        padding: 6px 12px;
+        cursor: pointer;
+        position: relative;
+
+        &:hover {
+            background-color: $hover-color;
+        }
+
+        .dropdown {
+            z-index: 1;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            visibility: hidden;
+            transition: 0s visibility;
+        }
+
+        &:hover > .dropdown {
+            visibility: visible;
+            transition-delay: 0.2s;
+        }
+    }
+}

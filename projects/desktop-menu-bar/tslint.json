@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "desktopMenuBar",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "desktop-menu-bar",
+      "kebab-case"
+    ]
+  }
+}

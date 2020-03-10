@@ -1,0 +1,31 @@
+@import '../constants.scss';
+
+.vertical-menu-item {
+    white-space: nowrap;
+    background-color: $main-color;
+    padding: 6px 12px;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        background-color: $hover-color;
+    }
+
+    .dropdown {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        visibility: hidden;
+        transition: 0s visibility;
+    }
+
+    &:hover > .dropdown {
+        visibility: visible;
+        transition-delay: 0.2s;
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    }
+}

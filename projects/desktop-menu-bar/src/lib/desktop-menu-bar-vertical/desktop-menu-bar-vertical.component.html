@@ -1,0 +1,9 @@
+<div>
+  <div *ngFor="let item of items" class="vertical-menu-item">
+    <span (click)="item.action ? item.action() : null">
+      {{ item.text }}
+      <span *ngIf="item.children && item.children.length">></span>
+    </span>
+    <desktop-menu-bar-vertical class="dropdown" [items]="item.children"></desktop-menu-bar-vertical>
+  </div>
+</div>

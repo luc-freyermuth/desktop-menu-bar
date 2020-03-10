@@ -1,0 +1,6 @@
+<div class="menu-bar">
+  <div class="menu-bar-item" *ngFor="let item of items">
+    <span>{{ item.text }}</span>
+    <desktop-menu-bar-vertical class="dropdown" [items]="item.children"></desktop-menu-bar-vertical>
+  </div>
+</div>
