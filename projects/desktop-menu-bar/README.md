@@ -1,24 +1,64 @@
 # DesktopMenuBar
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
+This angular component allows you to add a desktop-like menu bar in your Angular app.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project desktop-menu-bar` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project desktop-menu-bar`.
-> Note: Don't forget to add `--project desktop-menu-bar` or else it will be added to the default project in your `angular.json` file. 
+### Install the package
 
-## Build
+`npm install --save desktop-menu-bar`
 
-Run `ng build desktop-menu-bar` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Import it in your module
 
-## Publishing
+```typescript
+@NgModule({
+  imports: [
+    DesktopMenuBarModule
+  ]
+})
+export class MyModule { }
+```
+## Use it !
 
-After building your library with `ng build desktop-menu-bar`, go to the dist folder `cd dist/desktop-menu-bar` and run `npm publish`.
+### Create an array representing your menu in your component
 
-## Running unit tests
+```typescript
+import { DesktopMenuBarItem } from 'desktop-menu-bar';
 
-Run `ng test desktop-menu-bar` to execute the unit tests via [Karma](https://karma-runner.github.io).
+...
 
-## Further help
+menuItems: DesktopMenuBarItem[] = [
+  {
+    text: 'File',
+    children: [
+      {
+        text: 'Save',
+        action: () => { ... }
+      }
+    ]
+  },
+  {
+    text: 'Edit',
+    children: [
+      {
+        text: 'Go back',
+        action: () => { ... }
+      },
+      {
+        text: 'Go forward',
+        action: () => { ... }
+      }
+    ]
+  },
+  {
+    text: 'Help',
+    action: () => { ... }
+  }
+];
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Use it in your html !
+
+```html
+<desktop-menu-bar [items]="menuItems"></desktop-menu-bar>
+```
