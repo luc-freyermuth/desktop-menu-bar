@@ -42,6 +42,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "desktop-menu-bar"
+    }
+  },
+  "defaultProject": "desktop-menu-bar",
+  "cli": {
+    "analytics": false
+  }
 }
