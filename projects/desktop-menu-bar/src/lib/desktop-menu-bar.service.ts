@@ -1,4 +1,10 @@
-import { Injectable, ApplicationRef, ComponentFactoryResolver, Injector, ComponentRef } from '@angular/core';
+import {
+    Injectable,
+    ApplicationRef,
+    ComponentFactoryResolver,
+    Injector,
+    ComponentRef
+} from '@angular/core';
 import { DesktopMenuBarComponent } from '../lib/desktop-menu-bar/desktop-menu-bar.component';
 import { DesktopMenuBarItem } from '../interfaces/desktop-menu-bar-item.interface';
 
@@ -6,13 +12,13 @@ import { DesktopMenuBarItem } from '../interfaces/desktop-menu-bar-item.interfac
     providedIn: 'root'
 })
 export class DesktopMenuBarService {
-    menuComponentInstance: DesktopMenuBarComponent = null;
+    menuComponentRef: ComponentRef<DesktopMenuBarComponent> = null;
     menuItems: DesktopMenuBarItem[] = null;
 
     constructor(
-      private _applicationRef: ApplicationRef,
-      private _resolver: ComponentFactoryResolver,
-      private _injector: Injector
+        private applicationRef: ApplicationRef,
+        private resolver: ComponentFactoryResolver,
+        private injector: Injector
     ) {}
 
     setMenuBarItems(items: DesktopMenuBarItem[]) {
@@ -21,27 +27,51 @@ export class DesktopMenuBarService {
     }
 
     updateMenuBarItemsInComponent() {
-        if (this.menuComponentInstance) {
-            this.menuComponentInstance.items = this.menuItems;
+        if (this.isMenuBarVisible()) {
+            this.menuComponentRef.instance.items = this.menuItems;
         }
     }
 
     showMenuBar() {
-      const componentFactory = this._resolver.resolveComponentFactory(DesktopMenuBarComponent);
-      const componentRef = componentFactory.create(this._injector);
-      this._applicationRef.attachView(componentRef.hostView);
-      this.moveToDocumentBody(componentRef);
+        if (!this.isMenuBarVisible()) {
+            const componentFactory = this.resolver.resolveComponentFactory(
+                DesktopMenuBarComponent
+            );
+            this.menuComponentRef = componentFactory.create(this.injector);
+            this.applicationRef.attachView(this.menuComponentRef.hostView);
+            this.moveToDocumentBody(this.menuComponentRef);
 
-      this.menuComponentInstance = componentRef.instance;
-      this.updateMenuBarItemsInComponent();
+            this.updateMenuBarItemsInComponent();
+        }
     }
 
-    public moveToElement<T>(componentRef: ComponentRef<T>, element: Element): void {
-      element.insertBefore(componentRef.location.nativeElement, element.firstChild);
+    hideMenuBar() {
+        if (this.isMenuBarVisible()) {
+            this.applicationRef.detachView(this.menuComponentRef.hostView);
+            this.detachFromDocument(this.menuComponentRef);
+            this.menuComponentRef = null;
+        }
     }
 
-    // Moves the component to the document body.
-    public moveToDocumentBody<T>(componentRef: ComponentRef<T>): void {
-      this.moveToElement(componentRef, document.querySelector('body')!);
-  }
+    isMenuBarVisible(): boolean {
+        return !!this.menuComponentRef;
+    }
+
+    private moveToElement<T>(componentRef: ComponentRef<T>, element: Element): void {
+        element.insertBefore(
+            componentRef.location.nativeElement,
+            element.firstChild
+        );
+    }
+
+    private moveToDocumentBody<T>(componentRef: ComponentRef<T>) {
+        this.moveToElement(componentRef, document.querySelector('body'));
+    }
+
+    private detachFromDocument<T>(componentRef: ComponentRef<T>) {
+        const element = componentRef.location.nativeElement as Element;
+        if (element.parentNode) {
+            element.parentNode.removeChild(element);
+        }
+    }
 }
