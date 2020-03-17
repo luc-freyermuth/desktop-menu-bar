@@ -1,6 +1,6 @@
 # DesktopMenuBar
 
-This angular component allows you to add a desktop-like menu bar in your Angular app.
+This angular module allows you to add a desktop-like menu bar in your Angular app.
 
 ## Installation
 
@@ -23,42 +23,45 @@ export class MyModule { }
 ### Create an array representing your menu in your component
 
 ```typescript
-import { DesktopMenuBarItem } from 'desktop-menu-bar';
+import { DesktopMenuBarService } from 'desktop-menu-bar';
 
 ...
+constructor(
+  private menuBarService: DesktopMenuBarService
+) {}
 
-menuItems: DesktopMenuBarItem[] = [
-  {
-    text: 'File',
-    children: [
-      {
-        text: 'Save',
-        action: () => { ... }
-      }
-    ]
-  },
-  {
-    text: 'Edit',
-    children: [
-      {
-        text: 'Go back',
-        action: () => { ... }
-      },
-      {
-        text: 'Go forward',
-        action: () => { ... }
-      }
-    ]
-  },
-  {
-    text: 'Help',
-    action: () => { ... }
-  }
-];
-```
+ngOnInit() {
+  // Set up the menu items
+  this.menuBarService.setMenuBarItems([
+    {
+      text: 'File',
+      children: [
+        {
+          text: 'Save',
+          action: () => { ... }
+        }
+      ]
+    },
+    {
+      text: 'Edit',
+      children: [
+        {
+          text: 'Go back',
+          action: () => { ... }
+        },
+        {
+          text: 'Go forward',
+          action: () => { ... }
+        }
+      ]
+    },
+    {
+      text: 'Help',
+      action: () => { ... }
+    }
+  ]);
 
-### Use it in your html !
-
-```html
-<desktop-menu-bar [items]="menuItems"></desktop-menu-bar>
+  // Displays the bar at the top of the page (as the first child of the body)
+  this.menuBarService.showMenuBar();
+}
 ```
